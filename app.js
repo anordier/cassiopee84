@@ -18,6 +18,9 @@ app.get('', (req, res) => {
 app.get('/affichage', (req, res) => {
    res.sendFile(__dirname + '/public/views/display.html')
 })
+app.get('/Jaws', (req, res) => {
+    res.sendFile(__dirname + '/public/views/Jaws.html')
+ })
 
 // Démarrage du serveur
 app.listen(port, () => console.info(`Le serveur fonctionne et écoute au port ${port}.`))
