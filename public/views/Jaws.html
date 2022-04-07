@@ -105,7 +105,12 @@
 
 					geometry.computeVertexNormals();
 
-					const material = new THREE.MeshStandardMaterial( { color: 0xFF424242, flatShading: true } );
+					const material = new THREE.MeshPhongMaterial( {
+					color: 0xffffff,
+					flatShading: true,
+					vertexColors: true,
+					shininess: 0
+				} );
 					const mesh = new THREE.Mesh( geometry, material );
 
 					mesh.position.y = - 0.005;
@@ -123,7 +128,12 @@
 
 					geometry.computeVertexNormals();
 
-					const material = new THREE.MeshStandardMaterial( { color: 0xFF424242, flatShading: true } );
+					const material = new THREE.MeshPhongMaterial( {
+					color: 0xffffff,
+					flatShading: true,
+					vertexColors: true,
+					shininess: 0
+				} );
 					const mesh = new THREE.Mesh( geometry, material );
 
 					mesh.position.y = 0.005;
@@ -283,7 +293,7 @@
 				directionalLight.position.set( x, y, z );
 				scene.add( directionalLight );
 
-				directionalLight.castShadow = true;
+				directionalLight.castShadow = false;
 
 				const d = 1;
 				directionalLight.shadow.camera.left = - d;

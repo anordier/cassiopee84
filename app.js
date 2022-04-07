@@ -25,16 +25,3 @@ app.get('/Jaws', (req, res) => {
 // Démarrage du serveur
 app.listen(port, () => console.info(`Le serveur fonctionne et écoute au port ${port}.`))
 
-
-/*
-// Setup des routes
-const path = require('path')
-const publicDirPath = path.join(__dirname, '../public')
-app.use(express.static(publicDirPath, {extensions: ['html']}))
-app.use('/css', express.static(__dirname + '../css'))
-
-
-app.listen(port, () => {
-    console.log('Server is up and running on PORT ${port}.')
-})
-*/
