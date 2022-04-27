@@ -50,20 +50,10 @@
 		const lowerjawsize = 300;
 		let ambientLight, light;
 
-		let tess = - 1;	// force initialization
-		let bBottom;
-		let bLid;
-		let bBody;
-		let bFitLid;
-		let bNonBlinn;
-		let shading;
-
 		let meshLower;
 		let meshUpper;
 		let upperjaw;
 		let lowerjaw;
-		let rotationY;
-		let rotationZ;
 
 		let textureCube;
 		const materials = {};
@@ -223,8 +213,6 @@
 			effectController = {
 				upperjaw: true,
 				lowerjaw: true,
-				rotationY: false,
-				rotationZ: false,
 			};
 
 			const gui = new GUI();
@@ -240,7 +228,7 @@
 			if (effectController.upperjaw == upperjaw) { return; }
 			upperjaw = effectController.upperjaw;
 			if (upperjaw) { addEntity(meshUpper); }
-			if (!upperjaw) { removeEntity("upperJaw"); }
+			if (!upperjaw) { removeEntity(meshUpper); }
 			render();
 		}
 
@@ -248,7 +236,7 @@
 			if (effectController.lowerjaw == lowerjaw) { return; }
 			lowerjaw = effectController.lowerjaw;
 			if (lowerjaw) { addEntity(meshLower); }
-			if (!lowerjaw) { removeEntity("lowerJaw"); }
+			if (!lowerjaw) { removeEntity(meshLower); }
 			render();
 		}
 
@@ -257,9 +245,8 @@
 			animate();
 		}
 
-		function removeEntity(name) {
-			var selectedObject = scene.getObjectByName(name);
-			scene.remove(selectedObject);
+		function removeEntity(object) {
+			scene.remove(object);
 			animate();
 		}
 
