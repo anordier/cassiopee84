@@ -1,7 +1,7 @@
 //Importations
 const express = require('express')
 const app = express()
-const port = 8000
+const port = 80
 
 // Routes vers les fichiers statiques (html, css, js...)
 app.use(express.static('public'));
