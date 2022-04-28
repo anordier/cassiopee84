@@ -209,15 +209,15 @@
 			effectController = {
 				upperjaw: true,
 				lowerjaw: true,
-				resetcamera: false,
 				jawslist: 'benj',
+				resetcamera: function() { resetCamera() },
 			};
 
 			const gui = new GUI();
-			gui.add(effectController, 'upperjaw').name('Afficher la machoîre supérieure').onChange(updateUpperJaw);
-			gui.add(effectController, 'lowerjaw').name('Afficher la machôire inférieure').onChange(updateLowerJaw);
-			gui.add(effectController, 'resetcamera').name('Réinitialiser la position de la caméra').onChange(resetCamera);
+			gui.add(effectController, 'upperjaw').name('Afficher la mâchoîre supérieure').onChange(updateUpperJaw);
+			gui.add(effectController, 'lowerjaw').name('Afficher la mâchôire inférieure').onChange(updateLowerJaw);
 			gui.add(effectController, 'jawslist', ['benj']).name('Sélectionner la mâchoire à afficher').onChange(render);
+			gui.add(effectController, 'resetcamera').name('Réinitialiser la position de la caméra');
         }
 
 
