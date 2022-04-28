@@ -56,6 +56,7 @@
 		let lowerjaw;
 		
 		let resetcamera;
+		let jawslist;
 
 
 		let textureCube;
@@ -107,7 +108,6 @@
 			// Initialiser les fichiers PLY en mémoire, leur donner matériau, taille, ombre, nom, les ajouter à la scène
 
 			const loader = new PLYLoader();
-			x=0;
 			loader.load('/models/benj LowerJawScan.ply', function (geometry) {
 
 				geometry.computeVertexNormals();
@@ -216,12 +216,14 @@
 				upperjaw: true,
 				lowerjaw: true,
 				resetcamera: false,
+				jawslist: 'benj',
 			};
 
 			const gui = new GUI();
 			gui.add(effectController, 'upperjaw').name('Afficher la machoîre supérieure').onChange(updateUpperJaw);
 			gui.add(effectController, 'lowerjaw').name('Afficher la machôire inférieure').onChange(updateLowerJaw);
 			gui.add(effectController, 'resetcamera').name('Réinitialiser la position de la caméra').onChange(resetCamera);
+			gui.add(effectController, 'jawslist', ['benj']).name('Sélectionner la mâchoire à afficher').onChange(render);
         }
 
 
