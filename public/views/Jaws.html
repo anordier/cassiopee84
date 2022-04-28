@@ -62,8 +62,9 @@
 		let meshUpper;
 		let upperjaw;
 		let lowerjaw;
-		let rotationY;
-		let rotationZ;
+		
+		let resetcamera;
+
 
 		let textureCube;
 		const materials = {};
@@ -99,9 +100,6 @@
 			plane.receiveShadow = true;
 
 
-
-
-
 			// Définir le matériau dont seront faites les mâchoires (n'est pas unique à une machoîre cependant)
 			const material = new THREE.MeshPhongMaterial({
 				color: 0xffffff,
@@ -112,17 +110,18 @@
 
 
 
-			
-			
+
+
 			// Initialiser les fichiers PLY en mémoire, leur donner matériau, taille, ombre, nom, les ajouter à la scène
 
 			const loader = new PLYLoader();
+			x=0;
 			loader.load('/models/benj LowerJawScan.ply', function (geometry) {
 
 				geometry.computeVertexNormals();
 
 				meshLower = new THREE.Mesh(geometry, material);
-
+				
 				meshLower.scale.multiplyScalar(0.01);
 				meshLower.castShadow = true;
 				meshLower.receiveShadow = true;
@@ -180,6 +179,7 @@
 			// CONTROLS
 			cameraControls = new OrbitControls(camera, renderer.domElement);
 			cameraControls.addEventListener('change', render);
+			cameraControls.saveState();
 
 			// stats
 			stats = new Stats();
@@ -223,14 +223,15 @@
 			effectController = {
 				upperjaw: true,
 				lowerjaw: true,
-				rotationY: false,
-				rotationZ: false,
+				resetcamera: false,
 			};
 
 			const gui = new GUI();
 			gui.add(effectController, 'upperjaw').name('Afficher la machoîre supérieure').onChange(updateUpperJaw);
 			gui.add(effectController, 'lowerjaw').name('Afficher la machôire inférieure').onChange(updateLowerJaw);
-		}
+			gui.add(effectController, 'resetcamera').name('Réinitialiser la position de la caméra').onChange(resetCamera);
+        }
+
 
 
 
@@ -293,7 +294,11 @@
 
 		}
 
-
+		 
+        function resetCamera() {
+			cameraControls.reset();
+            animate();
+        }
 
 
 
