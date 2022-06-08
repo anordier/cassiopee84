@@ -44,6 +44,10 @@
 		const lowerjawsize = 300;
 		let ambientLight, light;
 
+		let meshLowerludo;
+		let meshUpperludo;
+		let meshLowerbenj;
+		let meshUpperbenj;
 		let meshLower;
 		let meshUpper;
 		let upperjaw;
@@ -106,11 +110,12 @@
 
 				geometry.computeVertexNormals();
 
-				meshLower = new THREE.Mesh(geometry, material);
+				meshLowerbenj = new THREE.Mesh(geometry, material);
 				
-				meshLower.scale.multiplyScalar(0.01);
-				meshLower.castShadow = true;
-				meshLower.receiveShadow = true;
+				meshLowerbenj.scale.multiplyScalar(0.01);
+				meshLowerbenj.castShadow = true;
+				meshLowerbenj.receiveShadow = true;
+				meshLower = meshLowerbenj;
 				meshLower.name = "lowerJaw";
 
 				scene.add(meshLower);
@@ -120,15 +125,40 @@
 
 				geometry.computeVertexNormals();
 
-				meshUpper = new THREE.Mesh(geometry, material);
+				meshUpperbenj = new THREE.Mesh(geometry, material);
 
-				meshUpper.scale.multiplyScalar(0.01);
-				meshUpper.castShadow = true;
-				meshUpper.receiveShadow = true;
+				meshUpperbenj.scale.multiplyScalar(0.01);
+				meshUpperbenj.castShadow = true;
+				meshUpperbenj.receiveShadow = true;
+				meshUpper = meshUpperbenj;
 				meshUpper.name = "upperJaw";
 
 				scene.add(meshUpper);
 			});
+			loader.load('/models/ludo_add LowerJawScan.ply', function (geometry) {
+
+			geometry.computeVertexNormals();
+
+			meshLowerludo = new THREE.Mesh(geometry, material);
+
+			meshLowerludo.scale.multiplyScalar(0.01);
+			meshLowerludo.castShadow = true;
+			meshLowerludo.receiveShadow = true;
+			});
+
+			loader.load('/models/ludo_add UpperJawScan.ply', function (geometry) {
+
+			geometry.computeVertexNormals();
+
+			meshUpperludo = new THREE.Mesh(geometry, material);
+
+			meshUpperludo.scale.multiplyScalar(0.01);
+			meshUpperludo.castShadow = true;
+			meshUpperludo.receiveShadow = true;
+			});
+
+			meshLower = meshLowerbenj;
+			meshUpper = meshUpperbenj;
 
 
 
@@ -216,13 +246,39 @@
 			const gui = new GUI();
 			gui.add(effectController, 'upperjaw').name('Afficher la mâchoîre supérieure').onChange(updateUpperJaw);
 			gui.add(effectController, 'lowerjaw').name('Afficher la mâchôire inférieure').onChange(updateLowerJaw);
-			gui.add(effectController, 'jawslist', ['benj']).name('Sélectionner la mâchoire à afficher').onChange(render);
+			gui.add(effectController, 'jawslist', ['benj','ludo']).name('Sélectionner la mâchoire à afficher').onChange(changeJaw);
 			gui.add(effectController, 'resetcamera').name('Réinitialiser la position de la caméra');
         }
 
 
 
+		function changeJaw() {
+			jawslist = effectController.jawslist;
+			scene.remove(meshLower);
+			scene.remove(meshUpper)
+			if (jawslist == 'benj') {
 
+				meshLower = meshLowerbenj;
+				meshLower.name = "lowerJaw";
+				scene.add(meshLower);
+
+				meshUpper = meshUpperbenj;
+				meshUpper.name = "upperJaw";
+				scene.add(meshUpper);
+				return;
+				
+			} else if (jawslist == 'ludo') {
+				meshLower = meshLowerludo;
+				meshLower.name = "lowerJaw";
+				scene.add(meshLower);
+
+				meshUpper = meshUpperludo;
+				meshUpper.name = "upperJaw";
+				scene.add(meshUpper);
+				return;
+			}
+			render();
+		}
 
 
 		function updateUpperJaw() {
